@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // @ts-check
-
 // NAME: Play Next
 // AUTHOR: daksh2k
 // DESCRIPTION: Add the current track to the top of the queue
@@ -57,11 +57,30 @@
         ];
     };
 
-    const fetchPlaylist = async (uri) => {
-        const res = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/${uri}/rows`, {
-            policy: { link: true },
+    const getAlbumInfoGraphQl = async (uri) => {
+        const { getAlbumNameAndTracks } = Spicetify.GraphQL.Definitions;
+        const { errors, data } = await Spicetify.GraphQL.Request(getAlbumNameAndTracks, {
+            uri,
+            locale: Spicetify.Locale.getLocale(),
+            offset: 0,
+            limit: 50,
         });
-        return res.rows.map((item) => item.link);
+
+        if (errors) throw "No album info returned.";
+        return data.albumUnion.tracksV2.items.map((item) => item.track.uri);
+    };
+
+    const fetchPlaylist = async (uri) => {
+        const { fetchPlaylistContents } = Spicetify.GraphQL.Definitions;
+        const { errors, data } = await Spicetify.GraphQL.Request(fetchPlaylistContents, {
+            uri,
+            locale: Spicetify.Locale.getLocale(),
+            offset: 0,
+            limit: 50,
+        });
+
+        if (errors) throw "No playlist info returned.";
+        return data.playlistV2.content.items.map((item) => item.itemV3.data.uri);
     };
 
     function shuffle(array) {
@@ -113,9 +132,7 @@
                 tracks = await fetchPlaylist(uri);
                 break;
             case Spicetify.URI.Type.ALBUM:
-                tracks = await fetchAlbumFromWebApi(
-                    `https://api.spotify.com/v1/albums/${uri.split(":")[2]}/tracks?limit=50`,
-                );
+                tracks = await getAlbumInfoGraphQl(uri);
                 break;
         }
         if (Spicetify.Player.getShuffle()) tracks = shuffle(tracks);
