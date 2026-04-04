@@ -490,8 +490,8 @@ async function main() {
             Spicetify.Mousetrap.bind("l", Lyrics.toggleLyrics);
         }
         Spicetify.Mousetrap.bind("c", () => {
-            const popup = document.querySelector("body > generic-modal");
-            if (popup) popup.remove();
+            const popup = document.querySelector("dialog.fs-popup-modal");
+            if (popup) (popup as HTMLDialogElement).close();
             else ConfigManager.openConfig();
         });
         Spicetify.Mousetrap.bind("q", toggleQueue);
@@ -526,8 +526,8 @@ async function main() {
         if (CFM.get("enableFullscreen")) {
             await Utils.fullScreenOff()?.catch((err) => { });
         }
-        const popup = document.querySelector("body > generic-modal");
-        if (popup) popup.remove();
+        const popup = document.querySelector("dialog.fs-popup-modal");
+        if (popup) (popup as HTMLDialogElement).close();
         DOM.style.remove();
         DOM.container.remove();
         if (CFM.get("lyricsDisplay")) {

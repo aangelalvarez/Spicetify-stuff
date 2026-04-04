@@ -6,7 +6,6 @@ import ICONS, { DEFAULTS } from "../../../constants";
 import { Config, Settings } from "../../../types/fullscreen";
 import Utils from "../../../utils/utils";
 import { DOM } from "../../elements";
-import { settingsStyles } from "../../../styles/settings";
 import { headerText, getSettingCard, createAdjust, getAboutSection } from "../../../utils/setting";
 import SeekableProgressBar from "../ProgressBar/ProgressBar";
 import SeekableVolumeBar from "../VolumeBar/VolumeBar";
@@ -15,6 +14,7 @@ import {
     modifyRotationSpeed,
     animateColor,
 } from "../../../utils/animation";
+import { PopupModal } from "../PopupModal/PopupModal";
 
 export class ConfigManager {
     static configContainer: HTMLDivElement;
@@ -76,7 +76,7 @@ export class ConfigManager {
         container.querySelector<HTMLElement>("#mode-exit")!.onclick = this.deactivate;
         container.querySelector<HTMLElement>("#mode-switch")!.onclick = () => {
             CFM.getGlobal("tvMode") ? this.openwithDef() : this.openwithTV();
-            document.querySelector("body > generic-modal")?.remove();
+            PopupModal.hide();
         };
         return container;
     }
@@ -199,10 +199,7 @@ export class ConfigManager {
 
         this.configContainer = document.createElement("div");
         this.configContainer.id = "full-screen-config-container";
-        const style = document.createElement("style");
-        style.innerHTML = settingsStyles;
         this.configContainer.append(
-            style,
             Utils.isModeActivated() ? this.getSettingTopHeader(LOCALE) : "",
             headerText(translations[LOCALE].settings.pluginSettings),
             this.createOptions(
@@ -212,7 +209,7 @@ export class ConfigManager {
                 "locale",
                 (value: string) => {
                     this.saveGlobalOption("locale", value);
-                    document.querySelector("body > generic-modal")?.remove();
+                    PopupModal.hide();
                     this.openConfig();
                 },
             ),
@@ -614,7 +611,7 @@ export class ConfigManager {
             getAboutSection(),
             this.getSettingBottomHeader(LOCALE),
         );
-        Spicetify.PopupModal.display({
+        PopupModal.display({
             title:
                 CFM.getMode() === "tv"
                     ? translations[LOCALE].settings.tvModeConfig

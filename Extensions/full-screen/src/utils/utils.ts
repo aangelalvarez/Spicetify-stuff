@@ -166,11 +166,11 @@ class Utils {
     }
 
     static overlayBack(hideBackground = true) {
-        const overlay = document.querySelector("body > generic-modal > div");
-        if (overlay) {
+        const dialog = document.querySelector("dialog.fs-popup-modal");
+        if (dialog) {
             hideBackground
-                ? overlay.classList.add("transparent-bg")
-                : overlay.classList.remove("transparent-bg");
+                ? dialog.classList.add("transparent-bg")
+                : dialog.classList.remove("transparent-bg");
         }
     }
 

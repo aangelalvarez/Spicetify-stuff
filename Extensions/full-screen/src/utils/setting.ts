@@ -112,8 +112,11 @@ export function getAboutSection() {
         </div>
     `;
     (settingCard.querySelector("#changelog") as HTMLButtonElement).onclick = () => {
-        const popup = document.querySelector("body > generic-modal");
-        if (popup) popup.remove();
+        const popup = document.querySelector("dialog.fs-popup-modal");
+        if (popup) {
+            (popup as any).close?.();
+            popup.remove();
+        }
         setTimeout(() => showWhatsNew(true), 100);
     };
     return settingCard;

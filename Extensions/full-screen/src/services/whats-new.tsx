@@ -3,7 +3,7 @@ import { version } from "../../package.json";
 import changelog, { VersionedChangelog } from "../constants/changelog";
 import semverGt from "semver/functions/gt";
 import { marked } from "marked";
-
+import { PopupModal, PopupModalContent } from "../ui/components/PopupModal/PopupModal";
 export default function showWhatsNew(forcedShow = false) {
     const [title, content] = getChangelogContent(forcedShow);
     showWhatsNewModal(
@@ -29,15 +29,15 @@ function getChangelogContent(forcedShow = false) {
                 })
                 .join("\n\n"),
             { gfm: true, breaks: true },
-        );
+        ) as string;
     } else {
         title = `New in Full Screen v${version}`;
-        content = marked.parse(changelog, { gfm: true, breaks: true });
+        content = marked.parse(changelog, { gfm: true, breaks: true }) as string;
     }
     return [title, content];
 }
 
-interface ModalContent extends Omit<Spicetify.PopupModal.Content, "content"> {
+interface ModalContent extends Omit<PopupModalContent, "content"> {
     content: JSX.Element | string;
 }
 
@@ -52,7 +52,7 @@ async function showWhatsNewModal(
     content: ModalContent,
     forcedShow = false,
 ) {
-    while (!Spicetify?.PopupModal || !Spicetify?.LocalStorage) {
+    while (!Spicetify?.LocalStorage) {
         await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
@@ -74,7 +74,7 @@ async function showWhatsNewModal(
     }
 
     function showModal() {
-        const modalContent: Spicetify.PopupModal.Content = {
+        const modalContent: PopupModalContent = {
             ...content,
             content:
                 typeof content.content == "string"
@@ -82,7 +82,7 @@ async function showWhatsNewModal(
                     : wrapReactElement(content.content),
         };
 
-        Spicetify.PopupModal.display(modalContent);
+        PopupModal.display(modalContent);
     }
 }
 
