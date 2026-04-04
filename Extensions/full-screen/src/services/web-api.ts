@@ -16,12 +16,36 @@ class WebAPI {
         }).then((res) => res.json());
     }
 
+    static async getTrackInfoGraphQl(uri: string) {
+        const { getTrack } = Spicetify.GraphQL.Definitions;
+        const { errors, data } = await Spicetify.GraphQL.Request(getTrack, {
+            uri,
+            locale: Spicetify.Locale.getLocale(),
+        });
+
+        if (errors) throw "No track info returned.";
+        return data.trackUnion;
+    }
+
     static async getAlbumInfo(id: string) {
         return fetch(`https://api.spotify.com/v1/albums/${id}`, {
             headers: {
                 Authorization: `Bearer ${await WebAPI.getToken()}`,
             },
         }).then((res) => res.json());
+    }
+
+    static async getAlbumInfoGraphQl(uri: string) {
+        const { getAlbum } = Spicetify.GraphQL.Definitions;
+        const { errors, data } = await Spicetify.GraphQL.Request(getAlbum, {
+            uri,
+            locale: Spicetify.Locale.getLocale(),
+            offset: 0,
+            limit: 10,
+        });
+
+        if (errors) throw "No album info returned.";
+        return data.albumUnion;
     }
 
     static async getPlaylistInfo(uri: string) {

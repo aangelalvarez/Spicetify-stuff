@@ -107,11 +107,11 @@ class Utils {
     }
 
     static async getAlbumReleaseDate(albumURI: string, locale: string) {
-        const albumInfo = await WebAPI.getAlbumInfo(albumURI.replace("spotify:album:", "")).catch(
+        const albumInfo = await WebAPI.getAlbumInfoGraphQl(albumURI).catch(
             (err) => console.error(err),
         );
-        if (!albumInfo?.release_date) return "";
-        const albumDate = new Date(albumInfo.release_date);
+        if (!albumInfo?.date) return "";
+        const albumDate = new Date(albumInfo.date.isoString);
         const recentDate = new Date();
         recentDate.setMonth(recentDate.getMonth() - 18);
         const dateStr = albumDate.toLocaleString(
@@ -207,9 +207,14 @@ class Utils {
                 case Spicetify.URI.Type.TRACK:
                     ctxIcon = ICONS.CTX_TRACK;
                     ctxSource = STRINGS.context.track;
-                    await WebAPI.getTrackInfo(uriObj?.id ?? "").then(
-                        (meta) => (ctxName = `${meta.name}  •  ${meta.artists[0].name}`),
-                    );
+                    await WebAPI.getTrackInfoGraphQl(Spicetify.Player.data.context.uri)
+                        .then(
+                            (meta) => (ctxName = `${meta.name}  •  ${meta.firstArtist.items[0].profile.name}`),
+                        )
+                        .catch(() => {
+                            console.warn("Failed to get track info from GraphQL, using fallback.");
+                            ctxName = Spicetify.Player.data.context.metadata.title;
+                        });
                     break;
                 case Spicetify.URI.Type.SEARCH:
                     ctxIcon = Spicetify.SVGIcons["search-active"];
