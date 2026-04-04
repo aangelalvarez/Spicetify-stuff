@@ -18,19 +18,27 @@ export class WebApi {
             },
         }).then((res) => res.json());
     }
+
+    static async getTrackInfoGraphQl(uri) {
+        const { getTrack } = Spicetify.GraphQL.Definitions;
+        const { errors, data } = await Spicetify.GraphQL.Request(getTrack, {
+            uri,
+            locale: Spicetify.Locale.getLocale(),
+        });
+
+        if (errors) throw "No track info returned.";
+        return data.trackUnion;
+    }
     /**
      * Get audio features of the track from Spotify web API
      * @param {string} query
      * @returns
      */
     static async getTrackFeatures(query) {
-        return fetch(`https://api.spotify.com/v1/audio-features/${query}`, {
-            headers: {
-                Authorization: `Bearer ${await WebApi.getToken()}`,
-            },
-        }).then((res) => res.json());
+        return Spicetify.CosmosAsync.get(
+            `https://spclient.wg.spotify.com/audio-attributes/v1/audio-features/${query}?format=json`,
+        );
     }
-
     /**
      * Search spotify and return the results.
      * @param {string} query

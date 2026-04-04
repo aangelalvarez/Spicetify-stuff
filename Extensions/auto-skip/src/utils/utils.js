@@ -24,7 +24,7 @@ export function getTrimmedTitle(title) {
 export async function addOriginalSongToQueue(searchQuery) {
     const searchSongs = await WebApi.searchSpotify(searchQuery);
     const allFeatures = await WebApi.getTrackFeatures(
-        `?ids=${searchSongs.tracks.items.map((track) => track.uri.split(":")[2]).join()}`
+        `?ids=${searchSongs.tracks.items.map((track) => track.uri.split(":")[2]).join()}`,
     ).catch((err) => console.error(err));
 
     for (const track of searchSongs.tracks.items) {
@@ -45,7 +45,7 @@ export async function addOriginalSongToQueue(searchQuery) {
  */
 export async function loadMetadata(uri) {
     const base62Id = uri.split(":")[2];
-    const meta = await WebApi.getTrackDetails(base62Id).catch((err) => console.error(err));
+    const meta = await WebApi.getTrackInfoGraphQl(uri).catch((err) => console.error(err));
     if (!meta || !meta.name) return null;
     meta.features = await WebApi.getTrackFeatures(base62Id).catch((err) => console.error(err));
     return meta;
