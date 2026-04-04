@@ -586,10 +586,11 @@ async function main() {
     );
 
     const extraBar = HtmlSelectors.getExtraBarSelector() as HTMLElement;
-    if (CFM.getGlobal("fsHideOriginal")) {
-        (extraBar.childNodes as NodeList)?.forEach((child: HTMLElement) => {
-            if ((child as HTMLElement)?.getAttribute("data-testid") === "fullscreen-mode-button") {
-                child?.remove();
+    if (CFM.getGlobal("fsHideOriginal") && extraBar) {
+        extraBar.childNodes.forEach((child: Node) => {
+            const el = child as HTMLElement;
+            if (el.nodeType === Node.ELEMENT_NODE && el.getAttribute("data-testid") === "fullscreen-mode-button") {
+                el.remove();
             }
         });
     }

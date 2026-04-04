@@ -18,27 +18,32 @@
     --theme-background-color: rgba(175, 175, 175, 0.6);
     --theme-hover-color: rgba(175, 175, 175, 0.3);
     --theme-main-color: rgba(var(--theme-color), 1);
+
     &.themed-buttons {
         --theme-background-color: rgba(var(--theme-color), 0.6);
         --theme-hover-color: rgba(var(--theme-color), 0.3);
     }
+
     #fsd-title svg,
     #fsd-artist svg,
     #fsd-album svg {
         transition: all var(--transition-duration) var(--transition-function);
         display: var(--icons-display);
     }
+
     .fsd-song-meta span:hover,
     .fsd-artist-list span:hover {
         cursor: pointer;
         text-decoration: underline;
     }
+
     .unavailable {
         color: var(--tertiary-color) !important;
         pointer-events: none !important;
         opacity: 0.5 !important;
         background: transparent !important;
     }
+
     /*
     .unavailable::after{
         content: "";
@@ -70,56 +75,69 @@
             opacity: 0;
             transform: translateY(-10px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
         }
     }
+
     @keyframes fadeDo {
         0% {
             opacity: 0;
             transform: translateY(10px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
         }
     }
+
     @keyframes fadeRi {
         0% {
             opacity: 0;
             transform: translateX(10px);
         }
+
         to {
             opacity: 1;
             transform: translateX(0);
         }
     }
+
     @keyframes fadeLe {
         0% {
             opacity: 0;
             transform: translateX(-10px);
         }
+
         to {
             opacity: 1;
             transform: translateX(0);
         }
     }
+
     .fade-do {
         animation: fadeDo 0.5s cubic-bezier(0.3, 0, 0, 1);
     }
+
     .fade-up {
         animation: fadeUp 0.5s cubic-bezier(0.3, 0, 0, 1);
     }
+
     .fade-ri {
         animation: fadeRi 0.5s cubic-bezier(0.3, 0, 0, 1);
     }
+
     .fade-le {
         animation: fadeLe 0.5s cubic-bezier(0.3, 0, 0, 1);
     }
+
     button.dot-after {
         padding-bottom: 3px !important;
     }
+
     .dot-after:after {
         background-color: currentColor;
         border-radius: 50%;
@@ -132,6 +150,7 @@
         transform: translateX(-50%);
         width: 4px;
     }
+
     #fsd-ctx-container {
         background-color: transparent;
         color: var(--secondary-color);
@@ -149,29 +168,36 @@
         opacity: 1;
         max-width: 40%;
     }
+
     #fsd-ctx-details {
         padding-left: 18px;
         line-height: initial;
         font-size: 18px;
         overflow: hidden;
     }
+
     #fsd-ctx-icon {
         width: 48px;
         height: 48px;
     }
+
     #fsd-progress-container {
         --theme-main-color: rgba(var(--main-color), 1);
     }
+
     &.themed-buttons #fsd-progress-container,
     &.themed-icons #fsd-progress-container {
         --theme-main-color: rgba(var(--theme-color), 1);
     }
+
     #fsd-ctx-icon svg {
         fill: var(--primary-color) !important;
     }
+
     #fsd-ctx-source {
         text-transform: uppercase;
     }
+
     #fsd-ctx-name {
         font-weight: 700;
         font-size: 20px;
@@ -180,11 +206,13 @@
         -webkit-line-clamp: 2;
         line-clamp: 2;
     }
+
     .ctx-no-name {
         padding-bottom: 2px;
         font-size: 24px;
         font-weight: 600;
     }
+
     #fsd-upnext-container {
         float: right;
         width: 600px;
@@ -201,8 +229,9 @@
         text-align: right;
         z-index: 50;
         transition: transform 0.75s ease-in-out;
-        transform: translateX(600px);
+        transform: translateX(750px);
     }
+
     #fsd_next_art_image {
         background-size: cover;
         background-position: center;
@@ -210,6 +239,7 @@
         height: 100px;
         border-radius: 15px;
     }
+
     #fsd_next_details {
         padding-right: 18px;
         padding-top: 17px;
@@ -219,6 +249,7 @@
         font-size: 19px;
         overflow: hidden;
     }
+
     #fsd_next_tit_art {
         padding-top: 9px;
         font-size: 22px;
@@ -227,36 +258,45 @@
         text-overflow: ellipsis;
         overflow: hidden;
     }
+
     @keyframes fsd_cssmarquee {
         0% {
             transform: translateX(0%);
         }
+
         18% {
             transform: translateX(0%);
         }
+
         100% {
             transform: translateX(var(--translate_width_fsd));
         }
     }
+
     @keyframes fsd_translate {
+
         0%,
         10% {
             transform: translateX(0%);
         }
+
         50%,
         55% {
             transform: translateX(var(--translate_width_fsd));
         }
+
         100% {
             transform: translateX(0%);
         }
     }
+
     #fad-lyrics-plus-container {
         transition: transform var(--transition-duration) var(--transition-function);
         position: absolute;
         right: var(--right-margin-lyrics);
         width: 50%;
         top: 7.5vh;
+
         .lyrics-lyricsContainer-LyricsContainer {
             --lyrics-color-active: var(--primary-color) !important;
             --lyrics-color-inactive: var(--tertiary-color) !important;
@@ -265,16 +305,19 @@
             --animation-tempo: 0.2s !important;
             height: 85vh !important;
         }
+
         .lyrics-config-button {
             margin-right: 20px;
         }
     }
+
     &.lyrics-unavailable,
     &.lyrics-hide-force {
         #fad-lyrics-plus-container {
             transform: translateX(1000px) scale3d(0.1, 0.1, 0.1) rotate(45deg);
         }
     }
+
     #fsd-foreground {
         position: relative;
         top: 0;
@@ -287,6 +330,7 @@
         color: var(--primary-color);
         transition: all var(--transition-duration) var(--transition-function);
     }
+
     #fsd-art-image {
         position: relative;
         width: 100%;
@@ -295,6 +339,7 @@
         border-radius: 8px;
         background-size: cover;
     }
+
     #fsd-art-inner {
         position: absolute;
         left: 3%;
@@ -305,20 +350,24 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
         transform: translateZ(0);
     }
+
     #fsd-artist {
         font-weight: 500;
         color: var(--secondary-color);
     }
+
     #fsd-album {
         font-weight: 400;
         color: var(--tertiary-color);
     }
+
     .fsd-controls {
         display: flex;
         flex-direction: row;
         transition: opacity 1s ease-in-out;
         column-gap: 10px;
     }
+
     #fsd-background {
         position: absolute;
         left: 0;
@@ -345,27 +394,33 @@
         transition:
             all 0.3s var(--transition-function),
             transform 0.1s var(--transition-function);
+
         &:hover {
             transform: scale(1.2);
             filter: saturate(1.5) contrast(1.5) !important;
             background: var(--theme-hover-color);
         }
+
         &.button-active {
             background: var(--theme-background-color) !important;
             filter: saturate(1.5) contrast(1.5) !important;
         }
     }
+
     #fsd-foreground svg {
         fill: var(--primary-color);
         transition: all 0.3s var(--transition-function);
     }
+
     &.themed-icons #fsd-foreground svg {
         fill: var(--theme-main-color);
         filter: saturate(1.5) contrast(1.5);
     }
+
     &.themed-icons.themed-buttons .fs-button.button-active svg {
         fill: var(--primary-color) !important;
     }
+
     .fsd-background-fade {
         transition: background-image var(--fs-transition) linear;
     }
@@ -375,6 +430,7 @@ body {
     &.fsd-activated #full-screen-display {
         display: block;
     }
+
     #fullscreen-default-button,
     #fullscreen-tv-button {
         background: transparent;
@@ -390,7 +446,9 @@ body {
         }
     }
 }
+
 .fsd-activated {
+
     .Root__top-bar,
     .Root__nav-bar,
     .Root__main-view,
@@ -398,14 +456,17 @@ body {
         visibility: hidden;
         display: none;
     }
+
     .Root__top-container {
         will-change: auto !important;
         transform: none !important;
         overflow-x: hidden !important;
     }
+
     .fsd-transform-animation {
         transition: transform 0.4s ease-in-out;
     }
+
     .fsd-queue-panel {
         --queue-panel-x: 1000px;
         z-index: 101;
@@ -413,29 +474,39 @@ body {
 
         .main-buddyFeed-actions.main-buddyFeed-closeContainer,
         .icNf66tgG3uxDMbCCIaN.XOSSUjLDKk9RRmiX_UWa,
-        .liw6Y_iPu2DJRwk10x9d.FLyfurPaIDAlwjsF3mLf {
+        .liw6Y_iPu2DJRwk10x9d.FLyfurPaIDAlwjsF3mLf,
+        .main-nowPlayingView-headerButtonContainer.SR7K4r2ugBwBspFK {
             display: none;
         }
+
         .XOawmCGZcQx4cesyNfVO,
-        .oXO9_yYs6JyOwkBn8E4a {
+        .oXO9_yYs6JyOwkBn8E4a,
+        .zjCIcN96KsMfWwRo {
             width: 500px !important;
         }
+
         .main-buddyFeed-container,
         .ffFwfKcPDbmAPLXzxzKq,
         .ffFwfKcPDbmAPLXzxzKq::before,
         .UrfDp0_mKGL9hkfh9g_R.SKjhjAC5p3CW1UI5UiMg,
-        .UrfDp0_mKGL9hkfh9g_R.SKjhjAC5p3CW1UI5UiMg::before {
+        .UrfDp0_mKGL9hkfh9g_R.SKjhjAC5p3CW1UI5UiMg::before,
+        .vDYkSjYiSm42esIK.Om8mTyZHUvkOhUr1,
+        .vDYkSjYiSm42esIK.Om8mTyZHUvkOhUr1::before {
             background: transparent !important;
             backdrop-filter: blur(10px) brightness(0.7);
             border-radius: 10px;
         }
     }
+
     &.vertical-mode {
+
         .XOawmCGZcQx4cesyNfVO,
-        .oXO9_yYs6JyOwkBn8E4a {
+        .oXO9_yYs6JyOwkBn8E4a,
+        .zjCIcN96KsMfWwRo {
             width: 280px !important;
         }
     }
+
     .Root__main-view-overlay {
         z-index: 1000;
     }

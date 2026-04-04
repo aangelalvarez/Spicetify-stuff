@@ -102,7 +102,7 @@ export class UpNext {
 
     static hideUpNext() {
         this.upNextShown = false;
-        DOM.fsd_myUp.style.transform = "translateX(600px)";
+        DOM.fsd_myUp.style.transform = "translateX(750px)";
         this.resetUpNextAnimation();
     }
 
@@ -144,7 +144,7 @@ export class UpNext {
                     }
                     this.upNextShown = true;
                 } else {
-                    DOM.fsd_myUp.style.transform = "translateX(600px)";
+                    DOM.fsd_myUp.style.transform = "translateX(750px)";
                     this.upNextShown = false;
                     if (Spicetify.Player.isPlaying()) {
                         this.upnextTimer = setTimeout(() => {
