@@ -332,6 +332,19 @@ export class ConfigManager {
             document.fullscreenEnabled
                 ? this.createToggle(translations[LOCALE].settings.fullscreen, "enableFullscreen")
                 : "",
+            CFM.getMode() === "def"
+                ? this.createOptions(
+                      translations[LOCALE].settings.albumArtSizing.setting,
+                      {
+                          standard: translations[LOCALE].settings.albumArtSizing.standard,
+                          expanded: translations[LOCALE].settings.albumArtSizing.expanded,
+                      },
+                      CFM.get("albumArtSizing") as Settings["albumArtSizing"],
+                      "albumArtSizing",
+                      (value: string) => this.saveOption("albumArtSizing", value as Settings["albumArtSizing"]),
+                      translations[LOCALE].settings.albumArtSizing.description,
+                  )
+                : "",
             headerText(translations[LOCALE].settings.extraHeader),
             this.createOptions(
                 translations[LOCALE].settings.extraControls,

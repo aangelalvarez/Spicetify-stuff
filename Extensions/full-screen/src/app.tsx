@@ -101,6 +101,10 @@ async function main() {
         );
         DOM.container.setAttribute("data-locale", LOCALE);
         DOM.container.setAttribute("mode", CFM.getMode());
+        DOM.container.classList.toggle(
+            "album-art-sizing-expanded",
+            CFM.getMode() === "def" && CFM.get("albumArtSizing") === "expanded",
+        );
         if (!CFM.get("lyricsDisplay") || CFM.get("extraControls") === "never")
             DOM.container.classList.remove("lyrics-hide-force");
 

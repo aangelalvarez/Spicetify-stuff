@@ -37,6 +37,8 @@ export type Settings = {
     contextDisplay: "never" | "mousemove" | "always";
     volumeDisplay: "always" | "never" | "smart";
     overviewDisplay: boolean;
+    /** Default full screen only: caps album art with fixed px vs viewport-based growth */
+    albumArtSizing: "standard" | "expanded";
     themedButtons: boolean;
     themedIcons: boolean;
     invertColors: "never" | "always" | "auto";
