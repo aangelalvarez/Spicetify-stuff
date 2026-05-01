@@ -90,8 +90,8 @@
         "songChangeAnimation": "Song Change Animation",
         "fullscreen": "Fullscreen",
         "albumArtSizing": {
-            "setting": "Album art size (default full screen)",
-            "description": "Does not affect TV mode. **1x-2.5x**: fixed layout; higher values multiply width limits (may clip or crowd lyrics). **Auto**: responsive cover size based on window size).",
+            "setting": "Album art size",
+            "description": "Does not affect TV mode. **1x-2.5x**: fixed layout; higher values make album art larger (may clip or crowd lyrics). **Auto**: responsive cover size (based on window size).",
             "classic": "1x",
             "scale125": "1.25x",
             "scale15": "1.5x",
