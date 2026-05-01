@@ -159,14 +159,13 @@
         flex-direction: column;
         text-align: center;
     }
-    /* Classic: respect --fsd-art-max-width from breakpoints above */
     #fsd-art {
-        width: min(calc(100vh - 300px), var(--fsd-art-max-width));
+        width: calc(100vh - 300px);
         max-width: var(--fsd-art-max-width);
         min-width: 300px;
     }
 
-    /* Auto scale: viewport-based size with margins (toggle via .album-art-auto-scale on #full-screen-display) */
+    /* Auto scale: viewport-based size with margins (.album-art-auto-scale on #full-screen-display) */
     &.album-art-auto-scale {
         #fsd-art {
             width: min(

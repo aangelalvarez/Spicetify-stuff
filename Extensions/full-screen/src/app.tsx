@@ -96,7 +96,7 @@ async function main() {
         );
         DOM.container.classList.toggle(
             "album-art-auto-scale",
-            CFM.getDef("albumArtSizing") === "auto",
+            CFM.getGlobal("defaultModeAlbumArtSizing") === "auto",
         );
         document.body.classList.toggle(
             "vertical-mode",

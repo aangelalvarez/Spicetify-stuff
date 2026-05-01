@@ -8,6 +8,8 @@ export type Config = {
     activationTypes: "both" | "btns" | "keys";
     buttonActivation: "both" | "tv" | "def";
     keyActivation: "both" | "tv" | "def";
+    /** Default full screen only (not TV). */
+    defaultModeAlbumArtSizing: "classic" | "auto";
 };
 
 export type Settings = {
@@ -37,8 +39,6 @@ export type Settings = {
     contextDisplay: "never" | "mousemove" | "always";
     volumeDisplay: "always" | "never" | "smart";
     overviewDisplay: boolean;
-    /** Default full screen only: classic = fixed max-width layout; auto = viewport-based scaling with margins. */
-    albumArtSizing: "classic" | "auto";
     themedButtons: boolean;
     themedIcons: boolean;
     invertColors: "never" | "always" | "auto";

@@ -23,7 +23,6 @@ export const DEFAULTS: Config = {
         contextDisplay: "always",
         volumeDisplay: "smart",
         overviewDisplay: true,
-        albumArtSizing: "classic",
         themedButtons: true,
         themedIcons: true,
         invertColors: "never",
@@ -62,7 +61,6 @@ export const DEFAULTS: Config = {
         contextDisplay: "mousemove",
         volumeDisplay: "smart",
         overviewDisplay: true,
-        albumArtSizing: "classic",
         themedButtons: true,
         themedIcons: false,
         invertColors: "never",
@@ -86,4 +84,5 @@ export const DEFAULTS: Config = {
     activationTypes: "both",
     buttonActivation: "both",
     keyActivation: "both",
+    defaultModeAlbumArtSizing: "classic",
 };

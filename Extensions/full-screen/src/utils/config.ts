@@ -10,6 +10,14 @@ function getConfig(DEFAULTS: Config): Config {
         const parsed = JSON.parse(localStorage.getItem("full-screen-config") ?? "{}");
         if (Boolean(parsed) && typeof parsed === "object") {
             defaultsDeep(parsed, DEFAULTS);
+            const def = parsed.def as Record<string, unknown> | undefined;
+            if (
+                def &&
+                (def.albumArtSizing === "classic" || def.albumArtSizing === "auto")
+            ) {
+                (parsed as unknown as Config).defaultModeAlbumArtSizing = def.albumArtSizing;
+                delete def.albumArtSizing;
+            }
             localStorage.setItem("full-screen-config", JSON.stringify(parsed));
             return parsed;
         }
@@ -78,21 +86,6 @@ const ConfigManager = {
     },
     setMode(modeValue: "tv" | "def") {
         ACTIVE = modeValue;
-    },
-    getDef(key: keyof Settings) {
-        if (CONFIG === null) {
-            CONFIG = getConfig(DEFAULTS);
-        }
-        return CONFIG.def[key];
-    },
-    setDef(key: keyof Settings, value: Settings[keyof Settings]) {
-        if (CONFIG === null) {
-            CONFIG = getConfig(DEFAULTS);
-        }
-        //@ts-ignore
-        CONFIG.def[key] = value;
-        saveConfig(CONFIG);
-        document.dispatchEvent(new CustomEvent(key, { detail: value }));
     },
     resetSettings(key: keyof Settings | null = null, isGlobal = false) {
         if (CONFIG === null) {

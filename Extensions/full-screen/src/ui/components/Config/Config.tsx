@@ -113,8 +113,6 @@ export class ConfigManager {
         key: keyof Settings | keyof Config,
         callback: (val: string) => void,
         description = "",
-        /** When true, invalid/missing values reset using `CONFIG.def` and `setDef` (for settings that only affect default mode). */
-        persistDef = false,
     ) {
         const settingCard = getSettingCard(
             `<select>
@@ -129,10 +127,7 @@ export class ConfigManager {
 
         const select = settingCard.querySelector<HTMLSelectElement>("select")!;
         if (!(configValue in options)) {
-            if (persistDef && key in DEFAULTS.def) {
-                configValue = DEFAULTS.def[key as keyof Settings] as string;
-                CFM.setDef(key as keyof Settings, configValue as Settings[keyof Settings]);
-            } else if (key in DEFAULTS[CFM.getMode()]) {
+            if (key in DEFAULTS[CFM.getMode()]) {
                 configValue = DEFAULTS[CFM.getMode()][key as keyof Settings] as string;
                 this.saveOption(key as keyof Settings, configValue);
             } else if (key in DEFAULTS) {
@@ -343,15 +338,15 @@ export class ConfigManager {
                     classic: translations[LOCALE].settings.albumArtSizing.classic,
                     auto: translations[LOCALE].settings.albumArtSizing.auto,
                 },
-                CFM.getDef("albumArtSizing"),
-                "albumArtSizing",
+                CFM.getGlobal("defaultModeAlbumArtSizing") as Config["defaultModeAlbumArtSizing"],
+                "defaultModeAlbumArtSizing",
                 (value: string) => {
-                    CFM.setDef("albumArtSizing", value as Settings["albumArtSizing"]);
-                    this.render();
-                    if (Utils.isModeActivated()) this.activate();
+                    this.saveGlobalOption(
+                        "defaultModeAlbumArtSizing",
+                        value as Config["defaultModeAlbumArtSizing"],
+                    );
                 },
                 translations[LOCALE].settings.albumArtSizing.description,
-                true,
             ),
             headerText(translations[LOCALE].settings.extraHeader),
             this.createOptions(
