@@ -1,4 +1,5 @@
 #full-screen-display[mode="def"] {
+    --fsd-album-size-mult: 1;
     &,
     &.lyrics-unavailable,
     &.lyrics-hide-force {
@@ -160,9 +161,9 @@
         text-align: center;
     }
     #fsd-art {
-        width: calc(100vh - 300px);
-        max-width: var(--fsd-art-max-width);
-        min-width: 300px;
+        width: calc((100vh - 300px) * var(--fsd-album-size-mult, 1));
+        max-width: calc(var(--fsd-art-max-width) * var(--fsd-album-size-mult, 1));
+        min-width: calc(300px * var(--fsd-album-size-mult, 1));
     }
 
     /* Auto scale: viewport-based size with margins (.album-art-auto-scale on #full-screen-display) */

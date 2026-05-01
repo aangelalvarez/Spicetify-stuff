@@ -11,11 +11,22 @@ function getConfig(DEFAULTS: Config): Config {
         if (Boolean(parsed) && typeof parsed === "object") {
             defaultsDeep(parsed, DEFAULTS);
             const def = parsed.def as Record<string, unknown> | undefined;
+            const legacyAlbum = def?.albumArtSizing;
             if (
                 def &&
-                (def.albumArtSizing === "classic" || def.albumArtSizing === "auto")
+                typeof legacyAlbum === "string" &&
+                [
+                    "classic",
+                    "auto",
+                    "scale125",
+                    "scale15",
+                    "scale175",
+                    "scale2",
+                    "scale25",
+                ].includes(legacyAlbum)
             ) {
-                (parsed as unknown as Config).defaultModeAlbumArtSizing = def.albumArtSizing;
+                (parsed as unknown as Config).defaultModeAlbumArtSizing =
+                    legacyAlbum as Config["defaultModeAlbumArtSizing"];
                 delete def.albumArtSizing;
             }
             localStorage.setItem("full-screen-config", JSON.stringify(parsed));

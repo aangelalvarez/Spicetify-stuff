@@ -336,6 +336,11 @@ export class ConfigManager {
                 translations[LOCALE].settings.albumArtSizing.setting,
                 {
                     classic: translations[LOCALE].settings.albumArtSizing.classic,
+                    scale125: translations[LOCALE].settings.albumArtSizing.scale125,
+                    scale15: translations[LOCALE].settings.albumArtSizing.scale15,
+                    scale175: translations[LOCALE].settings.albumArtSizing.scale175,
+                    scale2: translations[LOCALE].settings.albumArtSizing.scale2,
+                    scale25: translations[LOCALE].settings.albumArtSizing.scale25,
                     auto: translations[LOCALE].settings.albumArtSizing.auto,
                 },
                 CFM.getGlobal("defaultModeAlbumArtSizing") as Config["defaultModeAlbumArtSizing"],
