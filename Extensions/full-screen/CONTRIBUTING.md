@@ -1,26 +1,22 @@
-# Contributing — Full Screen (`Extensions/full-screen/`)
+# Contributing
 
-## Build and test locally
-
-From the full-screen folder:
 ```bash
+cd Extensions/full-screen
 npm install
 npm run build-local
 ```
 
-Output: `dist/fullScreen.js`. **`npm run build`** (without `-local`) may only hit your Spicetify install, not `dist/`.
+Bundle: `dist/fullScreen.js`. Use **`build-local`** so output lands in `dist/` (plain `npm run build` may not).
 
-**Load it in Spotify (dev-friendly)**
-
-If you installed **Full Screen** from the **Spicetify Marketplace**, remove or disable that marketplace extension first. Otherwise Spotify may still load the marketplace bundle (or two conflicting copies), and your local build will look like it “did nothing.”
-
-Copy the bundle into Spicetify’s **Extensions** folder, then apply. Example on macOS/Linux (adjust the repo path; Spicetify root is usually `spicetify config-dir`):
+**Try it in Spotify:** Uninstall Marketplace Full Screen (or remove it from `extensions` in `config-xpui.ini` — only one Full Screen should load, otherwise there might be conflicts). Copy the bundle and apply:
 
 ```bash
-cp dist/fullScreen.js ~/.config/spicetify/Extensions/fullScreenDev.js
-spicetify apply
+cp dist/fullScreen.js ~/.config/spicetify/Extensions/fullScreenDev.js && spicetify apply
+# Windows: %appdata%\spicetify\Extensions\
 ```
 
-One-time: in **`config-xpui.ini`**, set **`extensions`** to include **`fullScreenDev.js`** (or whatever filename you used). On Windows, copy to `%appdata%\spicetify\Extensions\` instead.
+Add `fullScreenDev.js` to `extensions =`, then `spicetify apply`.
 
-**Committing:** include `dist/fullScreen.js` if the repo should ship a ready-to-run build.
+**Done testing:** Remove `fullScreenDev.js` from config and from the Extensions folder, reinstall Full Screen from Marketplace, `spicetify apply`.
+
+**Pushing:** Commit changes along with the newly generated `dist/fullScreen.js` 
