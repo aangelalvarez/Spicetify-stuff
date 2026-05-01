@@ -90,12 +90,11 @@
         "songChangeAnimation": "Song Change Animation",
         "fullscreen": "Fullscreen",
         "albumArtSizing": {
-            "setting": "Album art size (default mode)",
-            "standard": "Standard (fixed max size)",
-            "expanded": "Expanded (fill column, viewport limits)",
-            "description": "Expanded mode removes the fixed pixel cap so cover art grows with your window while staying inside the layout (metadata, lyrics, and margins still reserved)."
+            "setting": "Album art sizing (default mode)",
+            "description": "Classic keeps the original fixed max sizes. Auto scales the cover from the window while preserving margins.",
+            "classic": "Classic (default layout)",
+            "auto": "Auto scale"
         },
-
         "extraHeader": "Extra Functionality",
         "backgroundChoice": {
             "setting": "⭐ Background Choice",

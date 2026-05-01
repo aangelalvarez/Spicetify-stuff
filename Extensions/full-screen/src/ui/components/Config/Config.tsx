@@ -113,12 +113,14 @@ export class ConfigManager {
         key: keyof Settings | keyof Config,
         callback: (val: string) => void,
         description = "",
+        /** When true, invalid/missing values reset using `CONFIG.def` and `setDef` (for settings that only affect default mode). */
+        persistDef = false,
     ) {
         const settingCard = getSettingCard(
             `<select>
                 ${Object.keys(options)
-                .map((item) => `<option value="${item}" dir="auto">${options[item]}</option>`)
-                .join("\n")}
+                    .map((item) => `<option value="${item}" dir="auto">${options[item]}</option>`)
+                    .join("\n")}
             </select>`,
             title,
             key,
@@ -127,7 +129,10 @@ export class ConfigManager {
 
         const select = settingCard.querySelector<HTMLSelectElement>("select")!;
         if (!(configValue in options)) {
-            if (key in DEFAULTS[CFM.getMode()]) {
+            if (persistDef && key in DEFAULTS.def) {
+                configValue = DEFAULTS.def[key as keyof Settings] as string;
+                CFM.setDef(key as keyof Settings, configValue as Settings[keyof Settings]);
+            } else if (key in DEFAULTS[CFM.getMode()]) {
                 configValue = DEFAULTS[CFM.getMode()][key as keyof Settings] as string;
                 this.saveOption(key as keyof Settings, configValue);
             } else if (key in DEFAULTS) {
@@ -332,19 +337,22 @@ export class ConfigManager {
             document.fullscreenEnabled
                 ? this.createToggle(translations[LOCALE].settings.fullscreen, "enableFullscreen")
                 : "",
-            CFM.getMode() === "def"
-                ? this.createOptions(
-                      translations[LOCALE].settings.albumArtSizing.setting,
-                      {
-                          standard: translations[LOCALE].settings.albumArtSizing.standard,
-                          expanded: translations[LOCALE].settings.albumArtSizing.expanded,
-                      },
-                      CFM.get("albumArtSizing") as Settings["albumArtSizing"],
-                      "albumArtSizing",
-                      (value: string) => this.saveOption("albumArtSizing", value as Settings["albumArtSizing"]),
-                      translations[LOCALE].settings.albumArtSizing.description,
-                  )
-                : "",
+            this.createOptions(
+                translations[LOCALE].settings.albumArtSizing.setting,
+                {
+                    classic: translations[LOCALE].settings.albumArtSizing.classic,
+                    auto: translations[LOCALE].settings.albumArtSizing.auto,
+                },
+                CFM.getDef("albumArtSizing"),
+                "albumArtSizing",
+                (value: string) => {
+                    CFM.setDef("albumArtSizing", value as Settings["albumArtSizing"]);
+                    this.render();
+                    if (Utils.isModeActivated()) this.activate();
+                },
+                translations[LOCALE].settings.albumArtSizing.description,
+                true,
+            ),
             headerText(translations[LOCALE].settings.extraHeader),
             this.createOptions(
                 translations[LOCALE].settings.extraControls,

@@ -159,10 +159,70 @@
         flex-direction: column;
         text-align: center;
     }
+    /* Classic: respect --fsd-art-max-width from breakpoints above */
     #fsd-art {
-        width: calc(100vh - 300px);
+        width: min(calc(100vh - 300px), var(--fsd-art-max-width));
         max-width: var(--fsd-art-max-width);
         min-width: 300px;
+    }
+
+    /* Auto scale: viewport-based size with margins (toggle via .album-art-auto-scale on #full-screen-display) */
+    &.album-art-auto-scale {
+        #fsd-art {
+            width: min(
+                max(120px, calc(100vh - 420px)),
+                max(120px, calc(50vw - 96px)),
+                max(120px, 68vmin)
+            );
+            max-width: none;
+            min-width: min(200px, calc(50vw - 56px));
+        }
+
+        &.lyrics-active:not(.lyrics-unavailable):not(.lyrics-hide-force) #fsd-art {
+            width: min(
+                max(120px, calc(100vh - 460px)),
+                max(120px, calc(50vw - 72px)),
+                max(120px, 66vmin)
+            );
+            max-width: none;
+        }
+
+        &.vertical-mode.lyrics-active #fsd-foreground #fsd-art {
+            width: min(
+                max(120px, calc(50vh - 160px)),
+                max(120px, calc(100vw - 72px)),
+                max(120px, 64vmin)
+            );
+            max-width: none;
+            min-width: min(180px, calc(100vw - 56px));
+        }
+
+        &.vertical-mode.lyrics-active.lyrics-unavailable #fsd-foreground #fsd-art,
+        &.vertical-mode.lyrics-active.lyrics-hide-force #fsd-foreground #fsd-art {
+            width: min(
+                max(120px, calc(100vh - 460px)),
+                max(120px, calc(100vw - 72px)),
+                max(120px, 66vmin)
+            );
+            max-width: none;
+        }
+
+        @media (max-width: 768px) {
+            #fsd-art {
+                width: min(
+                    max(120px, calc(100vh - 360px)),
+                    max(120px, calc(50vw - 52px)),
+                    max(120px, 66vmin)
+                );
+            }
+            &.lyrics-active:not(.lyrics-unavailable):not(.lyrics-hide-force) #fsd-art {
+                width: min(
+                    max(120px, calc(100vh - 380px)),
+                    max(120px, calc(50vw - 48px)),
+                    max(120px, 64vmin)
+                );
+            }
+        }
     }
 
     #fsd-title {
@@ -270,40 +330,5 @@
     .fsd-controls-right {
         width: 30%;
         justify-content: flex-end;
-    }
-}
-
-// Default mode only: viewport-based album art (no fixed px cap). Class toggled in app.tsx render().
-#full-screen-display[mode="def"].album-art-sizing-expanded {
-    #fsd-art {
-        width: min(calc(100vh - 220px), calc(50vw - 40px), 94vmin);
-        max-width: none;
-        min-width: min(260px, calc(50vw - 24px));
-    }
-
-    &.lyrics-active:not(.lyrics-unavailable):not(.lyrics-hide-force) #fsd-art {
-        width: min(calc(100vh - 260px), calc(50vw - 32px), 92vmin);
-        max-width: none;
-    }
-
-    &.vertical-mode.lyrics-active #fsd-foreground #fsd-art {
-        width: min(calc(50vh - 96px), calc(100vw - 36px), 88vmin);
-        max-width: none;
-        min-width: min(200px, calc(100vw - 28px));
-    }
-
-    &.vertical-mode.lyrics-active.lyrics-unavailable #fsd-foreground #fsd-art,
-    &.vertical-mode.lyrics-active.lyrics-hide-force #fsd-foreground #fsd-art {
-        width: min(calc(100vh - 300px), calc(100vw - 40px), 92vmin);
-        max-width: none;
-    }
-
-    @media (max-width: 768px) {
-        #fsd-art {
-            width: min(calc(100vh - 200px), calc(50vw - 24px), 90vmin);
-        }
-        &.lyrics-active:not(.lyrics-unavailable):not(.lyrics-hide-force) #fsd-art {
-            width: min(calc(100vh - 240px), calc(50vw - 20px), 88vmin);
-        }
     }
 }

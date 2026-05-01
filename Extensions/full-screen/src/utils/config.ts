@@ -79,6 +79,21 @@ const ConfigManager = {
     setMode(modeValue: "tv" | "def") {
         ACTIVE = modeValue;
     },
+    getDef(key: keyof Settings) {
+        if (CONFIG === null) {
+            CONFIG = getConfig(DEFAULTS);
+        }
+        return CONFIG.def[key];
+    },
+    setDef(key: keyof Settings, value: Settings[keyof Settings]) {
+        if (CONFIG === null) {
+            CONFIG = getConfig(DEFAULTS);
+        }
+        //@ts-ignore
+        CONFIG.def[key] = value;
+        saveConfig(CONFIG);
+        document.dispatchEvent(new CustomEvent(key, { detail: value }));
+    },
     resetSettings(key: keyof Settings | null = null, isGlobal = false) {
         if (CONFIG === null) {
             CONFIG = getConfig(DEFAULTS);
